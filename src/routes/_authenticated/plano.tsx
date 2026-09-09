@@ -148,8 +148,8 @@ function Plano() {
           <div className="sm:col-span-3">
             <Button
               onClick={() => {
-                if (titulo.trim().length < 2) return toast.error("Informe um título.");
-                if (Number(horas) <= 0) return toast.error("A meta precisa ser maior que zero.");
+                if (titulo.trim().length < 2) { toast.error("Informe um título."); return; }
+                if (Number(horas) <= 0) { toast.error("A meta precisa ser maior que zero."); return; }
                 criarPlano.mutate();
               }}
               disabled={criarPlano.isPending}
@@ -232,7 +232,7 @@ function Plano() {
                   aria-label="Adicionar etapa"
                   onClick={() => {
                     if ((novaEtapa[p.id] ?? "").trim().length < 2)
-                      return toast.error("Descreva a etapa.");
+                      { toast.error("Descreva a etapa."); return; }
                     criarEtapa.mutate(p.id);
                   }}
                 >

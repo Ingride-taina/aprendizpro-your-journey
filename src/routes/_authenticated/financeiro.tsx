@@ -223,8 +223,8 @@ function Financeiro() {
             <Button
               onClick={() => {
                 const v = Number(valor);
-                if (!(v > 0)) return toast.error("Informe um valor maior que zero.");
-                if (!categoria) return toast.error("A categoria é obrigatória.");
+                if (!(v > 0)) { toast.error("Informe um valor maior que zero."); return; }
+                if (!categoria) { toast.error("A categoria é obrigatória."); return; }
                 criarTransacao.mutate();
               }}
               disabled={criarTransacao.isPending}
@@ -275,7 +275,7 @@ function Financeiro() {
                 variant="outline"
                 onClick={() => {
                   if (!(Number(orcValor) > 0))
-                    return toast.error("O orçamento precisa ser maior que zero.");
+                    { toast.error("O orçamento precisa ser maior que zero."); return; }
                   salvarOrcamento.mutate();
                 }}
                 disabled={salvarOrcamento.isPending}

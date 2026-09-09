@@ -193,9 +193,9 @@ function Metas() {
           <div className="sm:col-span-3">
             <Button
               onClick={() => {
-                if (titulo.trim().length < 2) return toast.error("Informe um título.");
+                if (titulo.trim().length < 2) { toast.error("Informe um título."); return; }
                 if (!(Number(valorAlvo) > 0))
-                  return toast.error("O valor desejado precisa ser maior que zero.");
+                  { toast.error("O valor desejado precisa ser maior que zero."); return; }
                 criar.mutate();
               }}
               disabled={criar.isPending}

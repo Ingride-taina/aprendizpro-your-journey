@@ -206,8 +206,8 @@ function Agenda() {
             <DialogFooter>
               <Button
                 onClick={() => {
-                  if (titulo.trim().length < 2) return toast.error("Informe um título.");
-                  if (!inicio) return toast.error("Informe a data e a hora.");
+                  if (titulo.trim().length < 2) { toast.error("Informe um título."); return; }
+                  if (!inicio) { toast.error("Informe a data e a hora."); return; }
                   criar.mutate();
                 }}
                 disabled={criar.isPending}
