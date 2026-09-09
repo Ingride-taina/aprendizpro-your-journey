@@ -29,12 +29,12 @@ function ResetPassword() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (senha.length < 8) return toast.error("A senha precisa ter ao menos 8 caracteres.");
-    if (senha !== confirma) return toast.error("As senhas não coincidem.");
+    if (senha.length < 8) { toast.error("A senha precisa ter ao menos 8 caracteres."); return; }
+    if (senha !== confirma) { toast.error("As senhas não coincidem."); return; }
     setCarregando(true);
     const { error } = await supabase.auth.updateUser({ password: senha });
     setCarregando(false);
-    if (error) return toast.error("Não foi possível atualizar a senha. O link pode ter expirado.");
+    if (error) { toast.error("Não foi possível atualizar a senha. O link pode ter expirado."); return; }
     toast.success("Senha atualizada!");
     navigate({ to: "/dashboard" });
   }

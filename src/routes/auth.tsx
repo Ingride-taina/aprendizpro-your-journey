@@ -68,16 +68,16 @@ function AuthPage() {
       password: loginSenha,
     });
     setEntrando(false);
-    if (error) return toast.error("E-mail ou senha inválidos");
+    if (error) { toast.error("E-mail ou senha inválidos"); return; }
     navigate({ to: "/dashboard" });
   }
 
   async function cadastrar(e: React.FormEvent) {
     e.preventDefault();
     const parsed = cadastroSchema.safeParse({ nome, email, senha, dataNascimento, codigoTurma });
-    if (!parsed.success) return toast.error(parsed.error.issues[0]!.message);
+    if (!parsed.success) { toast.error(parsed.error.issues[0]!.message); return; }
     if (menor && !consentimento) {
-      return toast.error("É necessário o consentimento do responsável legal.");
+      { toast.error("É necessário o consentimento do responsável legal."); return; }
     }
 
     setCadastrando(true);
@@ -89,11 +89,11 @@ function AuthPage() {
 
     if (!turma) {
       setCadastrando(false);
-      return toast.error("Código de turma inválido.");
+      { toast.error("Código de turma inválido."); return; }
     }
     if (turma.status === "encerrada") {
       setCadastrando(false);
-      return toast.error("Esta turma foi encerrada. Novas interações não são permitidas.");
+      { toast.error("Esta turma foi encerrada. Novas interações não são permitidas."); return; }
     }
 
     const { error } = await supabase.auth.signUp({
@@ -123,11 +123,11 @@ function AuthPage() {
 
   async function recuperarSenha() {
     const alvo = (loginEmail || email).trim();
-    if (!alvo) return toast.error("Informe seu e-mail para receber o link.");
+    if (!alvo) { toast.error("Informe seu e-mail para receber o link."); return; }
     const { error } = await supabase.auth.resetPasswordForEmail(alvo, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
-    if (error) return toast.error("Não foi possível enviar o link agora.");
+    if (error) { toast.error("Não foi possível enviar o link agora."); return; }
     toast.success("Se o e-mail existir, enviamos um link válido por 1 hora.");
   }
 
