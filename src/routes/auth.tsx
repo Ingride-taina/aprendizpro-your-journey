@@ -111,11 +111,12 @@ function AuthPage() {
     });
     setCadastrando(false);
     if (error) {
-      return toast.error(
+      toast.error(
         error.message.toLowerCase().includes("registered")
           ? "Não foi possível concluir o cadastro com esses dados."
           : "Não foi possível concluir o cadastro. Tente novamente.",
       );
+      return;
     }
     setEnviado(true);
     toast.success("Confirme seu e-mail para liberar o acesso.");
