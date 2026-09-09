@@ -150,26 +150,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      compartilha_turma_como_docente: {
-        Args: { _aluno: string; _docente: string }
-        Returns: boolean
-      }
-      entrar_na_turma: { Args: { _codigo: string }; Returns: string }
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
-      is_docente_da_turma: {
-        Args: { _turma_id: string; _user_id: string }
-        Returns: boolean
-      }
-      is_membro_da_turma: {
-        Args: { _turma_id: string; _user_id: string }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
       app_role: "aluno" | "docente" | "admin"
