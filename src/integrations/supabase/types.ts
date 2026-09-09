@@ -14,16 +14,166 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          consentimento_responsavel: boolean
+          criado_em: string
+          data_nascimento: string | null
+          id: string
+          nome: string
+          tipo: Database["public"]["Enums"]["app_role"]
+        }
+        Insert: {
+          avatar_url?: string | null
+          consentimento_responsavel?: boolean
+          criado_em?: string
+          data_nascimento?: string | null
+          id: string
+          nome?: string
+          tipo?: Database["public"]["Enums"]["app_role"]
+        }
+        Update: {
+          avatar_url?: string | null
+          consentimento_responsavel?: boolean
+          criado_em?: string
+          data_nascimento?: string | null
+          id?: string
+          nome?: string
+          tipo?: Database["public"]["Enums"]["app_role"]
+        }
+        Relationships: []
+      }
+      turma_membros: {
+        Row: {
+          data_entrada: string
+          id: string
+          papel_na_turma: Database["public"]["Enums"]["app_role"]
+          turma_id: string
+          user_id: string
+        }
+        Insert: {
+          data_entrada?: string
+          id?: string
+          papel_na_turma?: Database["public"]["Enums"]["app_role"]
+          turma_id: string
+          user_id: string
+        }
+        Update: {
+          data_entrada?: string
+          id?: string
+          papel_na_turma?: Database["public"]["Enums"]["app_role"]
+          turma_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "turma_membros_turma_id_fkey"
+            columns: ["turma_id"]
+            isOneToOne: false
+            referencedRelation: "turmas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "turma_membros_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      turmas: {
+        Row: {
+          ano: number
+          codigo: string
+          criado_em: string
+          criado_por: string | null
+          descricao: string | null
+          id: string
+          nome: string
+          periodo: string | null
+          status: Database["public"]["Enums"]["turma_status"]
+        }
+        Insert: {
+          ano?: number
+          codigo: string
+          criado_em?: string
+          criado_por?: string | null
+          descricao?: string | null
+          id?: string
+          nome: string
+          periodo?: string | null
+          status?: Database["public"]["Enums"]["turma_status"]
+        }
+        Update: {
+          ano?: number
+          codigo?: string
+          criado_em?: string
+          criado_por?: string | null
+          descricao?: string | null
+          id?: string
+          nome?: string
+          periodo?: string | null
+          status?: Database["public"]["Enums"]["turma_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "turmas_criado_por_fkey"
+            columns: ["criado_por"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      compartilha_turma_como_docente: {
+        Args: { _aluno: string; _docente: string }
+        Returns: boolean
+      }
+      entrar_na_turma: { Args: { _codigo: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_docente_da_turma: {
+        Args: { _turma_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_membro_da_turma: {
+        Args: { _turma_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "aluno" | "docente" | "admin"
+      turma_status: "em_andamento" | "encerrada"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +300,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["aluno", "docente", "admin"],
+      turma_status: ["em_andamento", "encerrada"],
+    },
   },
 } as const
