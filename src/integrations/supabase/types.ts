@@ -14,6 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
+      budgets: {
+        Row: {
+          categoria: string
+          created_at: string
+          id: string
+          mes_referencia: string
+          updated_at: string
+          user_id: string
+          valor_limite: number
+        }
+        Insert: {
+          categoria: string
+          created_at?: string
+          id?: string
+          mes_referencia: string
+          updated_at?: string
+          user_id: string
+          valor_limite: number
+        }
+        Update: {
+          categoria?: string
+          created_at?: string
+          id?: string
+          mes_referencia?: string
+          updated_at?: string
+          user_id?: string
+          valor_limite?: number
+        }
+        Relationships: []
+      }
+      events: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          dia_inteiro: boolean
+          fim: string | null
+          id: string
+          inicio: string
+          lembrete_minutos: number | null
+          recorrencia: Database["public"]["Enums"]["recorrencia"]
+          titulo: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          dia_inteiro?: boolean
+          fim?: string | null
+          id?: string
+          inicio: string
+          lembrete_minutos?: number | null
+          recorrencia?: Database["public"]["Enums"]["recorrencia"]
+          titulo: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          dia_inteiro?: boolean
+          fim?: string | null
+          id?: string
+          inicio?: string
+          lembrete_minutos?: number | null
+          recorrencia?: Database["public"]["Enums"]["recorrencia"]
+          titulo?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      financial_goals: {
+        Row: {
+          aporte_mensal: number
+          created_at: string
+          data_alvo: string | null
+          id: string
+          meses: number
+          taxa_juros_mensal: number
+          titulo: string
+          updated_at: string
+          user_id: string
+          valor_alvo: number
+          valor_atual: number
+        }
+        Insert: {
+          aporte_mensal?: number
+          created_at?: string
+          data_alvo?: string | null
+          id?: string
+          meses?: number
+          taxa_juros_mensal?: number
+          titulo: string
+          updated_at?: string
+          user_id: string
+          valor_alvo: number
+          valor_atual?: number
+        }
+        Update: {
+          aporte_mensal?: number
+          created_at?: string
+          data_alvo?: string | null
+          id?: string
+          meses?: number
+          taxa_juros_mensal?: number
+          titulo?: string
+          updated_at?: string
+          user_id?: string
+          valor_alvo?: number
+          valor_atual?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -41,6 +155,155 @@ export type Database = {
           id?: string
           nome?: string
           tipo?: Database["public"]["Enums"]["app_role"]
+        }
+        Relationships: []
+      }
+      study_plan_steps: {
+        Row: {
+          concluida: boolean
+          created_at: string
+          id: string
+          ordem: number
+          plan_id: string
+          prazo: string | null
+          titulo: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          concluida?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number
+          plan_id: string
+          prazo?: string | null
+          titulo: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          concluida?: boolean
+          created_at?: string
+          id?: string
+          ordem?: number
+          plan_id?: string
+          prazo?: string | null
+          titulo?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_plan_steps_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "study_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      study_plans: {
+        Row: {
+          created_at: string
+          descricao: string | null
+          id: string
+          inicio: string
+          meta_horas_semana: number
+          prazo: string | null
+          status: Database["public"]["Enums"]["status_plano"]
+          titulo: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          inicio?: string
+          meta_horas_semana?: number
+          prazo?: string | null
+          status?: Database["public"]["Enums"]["status_plano"]
+          titulo: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          inicio?: string
+          meta_horas_semana?: number
+          prazo?: string | null
+          status?: Database["public"]["Enums"]["status_plano"]
+          titulo?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          concluida: boolean
+          created_at: string
+          id: string
+          prazo: string | null
+          titulo: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          concluida?: boolean
+          created_at?: string
+          id?: string
+          prazo?: string | null
+          titulo: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          concluida?: boolean
+          created_at?: string
+          id?: string
+          prazo?: string | null
+          titulo?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          categoria: string
+          created_at: string
+          data: string
+          descricao: string | null
+          id: string
+          tipo: Database["public"]["Enums"]["tipo_transacao"]
+          updated_at: string
+          user_id: string
+          valor: number
+        }
+        Insert: {
+          categoria: string
+          created_at?: string
+          data?: string
+          descricao?: string | null
+          id?: string
+          tipo: Database["public"]["Enums"]["tipo_transacao"]
+          updated_at?: string
+          user_id: string
+          valor: number
+        }
+        Update: {
+          categoria?: string
+          created_at?: string
+          data?: string
+          descricao?: string | null
+          id?: string
+          tipo?: Database["public"]["Enums"]["tipo_transacao"]
+          updated_at?: string
+          user_id?: string
+          valor?: number
         }
         Relationships: []
       }
@@ -154,6 +417,9 @@ export type Database = {
     }
     Enums: {
       app_role: "aluno" | "docente" | "admin"
+      recorrencia: "nenhuma" | "diaria" | "semanal" | "mensal"
+      status_plano: "ativo" | "concluido" | "pausado"
+      tipo_transacao: "entrada" | "saida"
       turma_status: "em_andamento" | "encerrada"
     }
     CompositeTypes: {
@@ -283,6 +549,9 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["aluno", "docente", "admin"],
+      recorrencia: ["nenhuma", "diaria", "semanal", "mensal"],
+      status_plano: ["ativo", "concluido", "pausado"],
+      tipo_transacao: ["entrada", "saida"],
       turma_status: ["em_andamento", "encerrada"],
     },
   },
